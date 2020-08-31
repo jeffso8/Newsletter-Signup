@@ -27,7 +27,7 @@ app.post("/", function(req, res) {
         LNAME: lastName
       }
     }]
-  };
+
   const jsonData = JSON.stringify(data);
   const url = "https://us17.api.mailchimp.com/3.0/lists/42aeaaddfb"
 
