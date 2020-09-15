@@ -5,6 +5,7 @@ const https = require("https")
 const app = express();
 
 app.use(express.static("public"));
+
 app.use(bodyParser.urlencoded({
   extended: true
 }));
@@ -13,6 +14,8 @@ app.get("/", function(req, res) {
   res.sendFile(__dirname + "/signup.html");
 });
 
+
+//post the data
 app.post("/", function(req, res) {
   const firstName = req.body.name1;
   const lastName = req.body.name2;
@@ -26,14 +29,14 @@ app.post("/", function(req, res) {
         FNAME: firstName,
         LNAME: lastName
       }
-    }]
+    }]};
 
   const jsonData = JSON.stringify(data);
-  const url = "https://us17.api.mailchimp.com/3.0/lists/42aeaaddfb"
+  const url = "https://us17.api.mailchimp.com/3.0/lists/42aeaaddfb";
 
   const options = {
     method: "POST",
-    auth: "jeffso8:ac16985df7fc7bf11113cae4a76b62f5-us17"
+    auth: "jeffso8:8d2aa7f21a74fa9dacbc60562ba0b204-us17"
   };
 
   const request = https.request(url, options, function(response) {
@@ -48,7 +51,7 @@ app.post("/", function(req, res) {
       console.log(JSON.parse(data))
     });
   });
-
+  console.log(request);
   request.write(jsonData);
   request.end();
 });
@@ -60,6 +63,3 @@ app.post("/failure", function(req, res) {
 app.listen(process.env.PORT || 3000, function() {
   console.log("Server is running on port 3000");
 });
-
-//mailchimp API Key: ac16985df7fc7bf11113cae4a76b62f5-us17
-//mailchimp List ID: 42aeaaddfb
